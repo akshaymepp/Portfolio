@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply scroll-smooth;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-900 text-white antialiased;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    font-feature-settings: "rounding" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins font-bold tracking-tight;
+  }
+
+  p {
+    @apply font-sans font-normal;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent-blue via-accent-cyan to-accent-purple bg-clip-text text-transparent;
+  }
+
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl;
+  }
+
+  .glass-button {
+    @apply relative px-6 py-3 rounded-xl font-medium transition-all duration-300;
+    @apply bg-white/5 border border-white/20 hover:bg-white/10;
+    @apply hover:shadow-glow-md hover:border-accent-blue/50;
+  }
+
+  .glow-border {
+    @apply relative;
+    border-image: linear-gradient(135deg, #00d9ff, #a78bfa) 1;
+  }
+
+  .smooth-transition {
+    @apply transition-all duration-300 ease-out;
+  }
+}
+
+/* Custom animations for premium feel */
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes magneticHover {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(2px, -2px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-text-reveal {
+  animation: textReveal 0.8s ease-out;
+}
+
+.animate-float-in {
+  animation: floatIn 0.8s ease-out;
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s infinite;
+  background-size: 1000px 100%;
+}
+
+/* Smooth scrolling */
+html {
+  @apply scroll-smooth;
+}
+
+/* Remove default buttons and links styling */
+button:focus,
+a:focus {
+  @apply outline-none focus:outline-none;
+}
+
+/* Selection color */
+::selection {
+  @apply bg-accent-blue/30 text-white;
+}
+* {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
