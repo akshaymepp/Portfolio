@@ -1,19 +1,52 @@
-import { useFadeInOnScroll } from '../hooks/useAnimations'
+import { useFadeInOnScroll, useTypingAnimation } from '../hooks/useAnimations'
 
 export const About = () => {
   const fadeRef = useFadeInOnScroll()
+  
+  const whatIDoContent = `Collaborated closely with stakeholders and cross-functional teams in an Agile environment to understand requirements and ensure comprehensive test coverage for insurance applications.
+
+Performed both manual and automation testing to validate functional and non-functional requirements across web-based and API-driven applications.
+
+Developed and maintained automation scripts using Selenium with Java and Taiko with JavaScript to support regression, smoke, and integration testing.
+
+Conducted API testing to validate request/response structures, authentication mechanisms, and data accuracy using tools like Postman and REST-assured.
+
+Executed performance testing scenarios to assess system behavior under load and identify bottlenecks affecting application speed and reliability.
+
+Actively participated in Agile ceremonies including sprint planning, daily stand-ups, and retrospectives, contributing to sprint deliverables and continuous improvement.
+
+Logged, tracked, and prioritized defects using JIRA, and collaborated with developers to ensure timely resolution.
+
+Created and maintained reusable test cases, test data, and test plans based on user stories and acceptance criteria.
+
+Worked with CI/CD pipelines to integrate automated test scripts into the build process, ensuring faster feedback and early bug detection.
+
+Provided regular test reports, bug analysis, and QA sign-offs to support release readiness and maintain high quality deliverables.`
+  
+  const { ref: whatIDoRef, displayedText: whatIDoText } = useTypingAnimation(whatIDoContent, 35)
+
 
   return (
     <section id="about" className="py-24 bg-dark-900/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={fadeRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left - Image */}
-          <div className="glass-effect p-8 rounded-3xl">
-            <div className="relative overflow-hidden rounded-2xl aspect-square bg-gradient-to-br from-accent-blue/20 to-accent-purple/20">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/30 via-transparent to-accent-purple/30 opacity-50" />
-              <div className="flex items-center justify-center h-full">
-                <div className="text-6xl">👨‍💻</div>
-              </div>
+        <div ref={fadeRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          {/* Left - What I Do Section */}
+          <div className="glass-effect p-8 rounded-3xl transition-all duration-300 hover:bg-white/15 hover:border-accent-cyan/50 hover:shadow-lg">
+            <h3 className="text-lg font-poppins font-bold mb-4 text-accent-blue">
+              What I Do
+            </h3>
+            <div 
+              ref={whatIDoRef}
+              className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap font-sans overflow-y-auto hide-scrollbar antialiased"
+              style={{
+                height: '400px',
+                fontSmoothing: 'antialiased',
+                WebkitFontSmoothing: 'antialiased',
+                letterSpacing: '0.3px'
+              }}
+            >
+              {whatIDoText}
+              <span className="animate-pulse ml-1">|</span>
             </div>
           </div>
 
@@ -24,42 +57,12 @@ export const About = () => {
                 About <span className="gradient-text">Me</span>
               </h2>
               <p className="text-gray-300 text-lg leading-relaxed">
-                I'm a Software Quality Engineer with 3+ years of experience in test automation
-                and quality assurance. I specialize in building scalable automation frameworks
-                that catch bugs before they reach production.
+                Software Test Engineer with 3+ years of experience in automation and manual testing within the insurance domain and 
+                specializing in API testing, integration testing, regression testing, and performance testing. Proficient in using 
+                Selenium with Java and Taiko with JavaScript to build robust and maintainable test automation frameworks. Skilled 
+in identifying issues early in the development lifecycle and ensuring high-quality software delivery through efficient 
+and reliable testing practices.Experienced in designing scalable test strategies, improving test coverage, and reducing execution time through optimized automation solutions. Strong hands-on experience with tools like Postman, REST-assured, and JMeter for API and performance validation
               </p>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-              <h3 className="text-xl font-poppins font-bold mb-4 text-accent-blue">
-                What I Do
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-cyan flex-shrink-0 mt-1">→</span>
-                  <span className="text-gray-300">
-                    Design robust test automation frameworks using Selenium & Java
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-cyan flex-shrink-0 mt-1">→</span>
-                  <span className="text-gray-300">
-                    Perform comprehensive API testing with JMeter & Postman
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-cyan flex-shrink-0 mt-1">→</span>
-                  <span className="text-gray-300">
-                    Implement CI/CD testing pipelines with Jenkins & GitHub Actions
-                  </span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-cyan flex-shrink-0 mt-1">→</span>
-                  <span className="text-gray-300">
-                    Build test reports & dashboards for stakeholder communication
-                  </span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

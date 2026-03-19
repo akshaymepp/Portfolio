@@ -48,6 +48,16 @@
     border-image: linear-gradient(135deg, #00d9ff, #a78bfa) 1;
   }
 
+  /* Hide scrollbar but keep scrolling functionality */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .smooth-transition {
     @apply transition-all duration-300 ease-out;
   }
