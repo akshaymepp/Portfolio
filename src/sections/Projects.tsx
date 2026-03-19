@@ -1,10 +1,12 @@
 import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
+import { useSectionTransition } from '../hooks/useSectionTransition'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export const Projects = () => {
+  const headerRef = useSectionTransition({ animationType: 'slideUp', duration: 0.8 })
   const containerRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
 
@@ -123,10 +125,10 @@ export const Projects = () => {
   }, [])
 
   return (
-    <section id="projects" className="py-24 bg-dark-900/50">
+    <section id="projects" className="py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div ref={headerRef} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
             Featured <span className="gradient-text">Projects</span>
           </h2>

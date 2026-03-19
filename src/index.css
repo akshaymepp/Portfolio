@@ -48,6 +48,44 @@
     border-image: linear-gradient(135deg, #00d9ff, #a78bfa) 1;
   }
 
+  /* Skill card - uniform sizing and brightness */
+  .skill-card {
+    @apply opacity-100 transition-opacity duration-300;
+  }
+
+  .skill-card:hover {
+    @apply opacity-100;
+  }
+
+  /* Devicon colors on hover only */
+  .skill-card i.colored {
+    filter: grayscale(100%);
+    transition: filter 300ms;
+  }
+
+  .skill-card:hover i.colored {
+    filter: grayscale(0%);
+  }
+
+  /* Text color on hover */
+  .skill-card {
+    --text-color: rgb(229, 231, 235); /* gray-100 */
+  }
+
+  .skill-card:hover {
+    --text-color: rgb(34, 197, 94); /* green */
+  }
+
+  .skill-card div {
+    color: var(--text-color);
+    transition: color 300ms;
+  }
+
+  /* Section-level dimming for all slides - uses CSS :has() selector */
+  #skills:has(.skill-card:hover) .skill-card:not(:hover) {
+    @apply opacity-30;
+  }
+
   /* Hide scrollbar but keep scrolling functionality */
   .hide-scrollbar {
     -ms-overflow-style: none;
@@ -60,6 +98,56 @@
 
   .smooth-transition {
     @apply transition-all duration-300 ease-out;
+  }
+
+  /* Animate-in states for scroll transitions */
+  .animate-in {
+    @apply animate-slideUpFade;
+  }
+
+  .animate-in-left {
+    @apply animate-slideInLeftFade;
+  }
+
+  .animate-in-right {
+    @apply animate-slideInRightFade;
+  }
+
+  .animate-in-scale {
+    @apply animate-scaleInFade;
+  }
+
+  /* Stagger animation for child elements */
+  .stagger-children > * {
+    @apply opacity-0 translate-y-8;
+  }
+
+  .stagger-children.animate-in > * {
+    @apply animate-slideUpFade;
+  }
+
+  .stagger-children.animate-in > :nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  .stagger-children.animate-in > :nth-child(2) {
+    animation-delay: 100ms;
+  }
+
+  .stagger-children.animate-in > :nth-child(3) {
+    animation-delay: 200ms;
+  }
+
+  .stagger-children.animate-in > :nth-child(4) {
+    animation-delay: 300ms;
+  }
+
+  .stagger-children.animate-in > :nth-child(5) {
+    animation-delay: 400ms;
+  }
+
+  .stagger-children.animate-in > :nth-child(n+6) {
+    animation-delay: 500ms;
   }
 }
 
@@ -92,6 +180,51 @@
   }
   50% {
     transform: translate(2px, -2px);
+  }
+}
+
+/* Entrance Animations for Scroll Transitions */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeftFade {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRightFade {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleInFade {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

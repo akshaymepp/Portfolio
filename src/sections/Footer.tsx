@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react'
+import { useSectionTransition } from '../hooks/useSectionTransition'
 import gsap from 'gsap'
 
 export const Footer = () => {
+  const footerRef = useSectionTransition({ animationType: 'slideUp', duration: 0.8 })
   const socialRef = useRef<HTMLDivElement>(null)
 
   const socials = [
@@ -38,7 +40,7 @@ export const Footer = () => {
   }, [])
 
   return (
-    <footer className="bg-dark-900 border-t border-white/5">
+    <footer ref={footerRef} className="bg-gradient-to-b from-dark-900/50 to-dark-900 border-t border-white/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}

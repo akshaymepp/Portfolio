@@ -1,7 +1,7 @@
-import { useFadeInOnScroll } from '../hooks/useAnimations'
+import { useSectionTransition } from '../hooks/useSectionTransition'
 
 export const Experience = () => {
-  const fadeRef = useFadeInOnScroll()
+  const timelineRef = useSectionTransition({ animationType: 'stagger', staggerDelay: 0.2 })
 
   const experiences = [
     {
@@ -34,7 +34,7 @@ export const Experience = () => {
   ]
 
   return (
-    <section id="experience" className="py-24 bg-dark-900">
+    <section id="experience" className="py-24 bg-gradient-to-b from-dark-900/50 to-dark-900">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -47,13 +47,14 @@ export const Experience = () => {
         </div>
 
         {/* Timeline */}
-        <div ref={fadeRef} className="space-y-12 relative">
+        <div ref={timelineRef} className="space-y-12 relative">
           {/* Timeline line */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-blue/50 to-accent-purple/50" />
 
           {experiences.map((exp, idx) => (
             <div
               key={idx}
+              data-animate
               className={`grid grid-cols-1 md:grid-cols-2 gap-8 items-center ${
                 idx % 2 === 1 ? 'md:[direction:rtl]' : ''
               }`}

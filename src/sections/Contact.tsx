@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { useFadeInOnScroll } from '../hooks/useAnimations'
+import { useSectionTransition } from '../hooks/useSectionTransition'
 import gsap from 'gsap'
 
 export const Contact = () => {
@@ -9,7 +9,7 @@ export const Contact = () => {
     message: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const fadeRef = useFadeInOnScroll()
+  const headerRef = useSectionTransition({ animationType: 'slideUp', duration: 0.8 })
   const formRef = useRef<HTMLFormElement>(null)
 
   const handleChange = (
@@ -58,10 +58,10 @@ export const Contact = () => {
   }
 
   return (
-    <section id="contact" className="py-24 bg-dark-900/50">
+    <section id="contact" className="py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div ref={fadeRef} className="text-center mb-16">
+        <div ref={headerRef} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
             Let's <span className="gradient-text">Work Together</span>
           </h2>

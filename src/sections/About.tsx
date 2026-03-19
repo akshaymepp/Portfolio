@@ -1,7 +1,8 @@
-import { useFadeInOnScroll, useTypingAnimation } from '../hooks/useAnimations'
+import { useTypingAnimation } from '../hooks/useAnimations'
+import { useSectionTransition } from '../hooks/useSectionTransition'
 
 export const About = () => {
-  const fadeRef = useFadeInOnScroll()
+  const fadeRef = useSectionTransition({ animationType: 'slideUp', duration: 0.8 })
   
   const whatIDoContent = `Collaborated closely with stakeholders and cross-functional teams in an Agile environment to understand requirements and ensure comprehensive test coverage for insurance applications.
 
@@ -27,7 +28,7 @@ Provided regular test reports, bug analysis, and QA sign-offs to support release
 
 
   return (
-    <section id="about" className="py-24 bg-dark-900/50">
+    <section id="about" className="py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={fadeRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           {/* Left - What I Do Section */}
@@ -40,10 +41,9 @@ Provided regular test reports, bug analysis, and QA sign-offs to support release
               className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap font-sans overflow-y-auto hide-scrollbar antialiased"
               style={{
                 height: '400px',
-                fontSmoothing: 'antialiased',
                 WebkitFontSmoothing: 'antialiased',
                 letterSpacing: '0.3px'
-              }}
+              } as React.CSSProperties}
             >
               {whatIDoText}
               <span className="animate-pulse ml-1">|</span>
