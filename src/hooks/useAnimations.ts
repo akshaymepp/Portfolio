@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 
@@ -192,4 +192,113 @@ export const useCounterAnimation = (target: number, duration: number = 1.5) => {
   }, [target, duration])
 
   return ref
+}
+
+export const useTypingAnimation = (text: string, speed: number = 30) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const [displayedText, setDisplayedText] = useState('')
+  const isUserScrollingRef = useRef(false)
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+
+    // Handle manual scroll detection
+    const handleScroll = () => {
+      isUserScrollingRef.current = true
+      
+      // Clear any existing timeout
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+      
+      // Check if user scrolled back to bottom
+      if (ref.current) {
+        const isAtBottom = 
+          ref.current.scrollHeight - ref.current.scrollTop - ref.current.clientHeight < 50
+        
+        if (isAtBottom) {
+          isUserScrollingRef.current = false
+        }
+      }
+    }
+
+    ref.current.addEventListener('scroll', handleScroll)
+
+    let index = 0
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setDisplayedText(text.substring(0, index + 1))
+        index++
+        
+        // Auto-scroll only if user hasn't manually scrolled away
+        if (!isUserScrollingRef.current) {
+          setTimeout(() => {
+            if (ref.current) {
+              ref.current.scrollTop = ref.current.scrollHeight
+            }
+          }, 0)
+        }
+      } else {
+        clearInterval(interval)
+      }
+    }, speed)
+
+    return () => {
+      clearInterval(interval)
+      if (ref.current) {
+        ref.current.removeEventListener('scroll', handleScroll)
+      }
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+      }
+    }
+  }, [text, speed])
+
+  return { ref, displayedText }
+}
+
+export const useLineByLineAnimation = (lines: string[], typingSpeed: number = 30, delayBetweenLines: number = 1000) => {
+  const ref = useRef<HTMLDivElement>(null)
+  const [displayedText, setDisplayedText] = useState('')
+  const [currentLineIndex, setCurrentLineIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+
+  useEffect(() => {
+    const currentLine = lines[currentLineIndex]
+    
+    if (charIndex < currentLine.length) {
+      const timeout = setTimeout(() => {
+        // Accumulate previous lines with current line
+        const previousLines = lines.slice(0, currentLineIndex).join('\n\n')
+        const currentTypedLine = currentLine.substring(0, charIndex + 1)
+        const fullText = previousLines ? previousLines + '\n\n' + currentTypedLine : currentTypedLine
+        setDisplayedText(fullText)
+        setCharIndex(charIndex + 1)
+      }, typingSpeed)
+
+      return () => clearTimeout(timeout)
+    } else {
+      // Wait before moving to next line
+      if (currentLineIndex < lines.length - 1) {
+        const timeout = setTimeout(() => {
+          setCurrentLineIndex(currentLineIndex + 1)
+          setCharIndex(0)
+        }, delayBetweenLines)
+
+        return () => clearTimeout(timeout)
+      } else {
+        // All lines done, wait then reset
+        const timeout = setTimeout(() => {
+          setCurrentLineIndex(0)
+          setCharIndex(0)
+          setDisplayedText('')
+        }, delayBetweenLines)
+
+        return () => clearTimeout(timeout)
+      }
+    }
+  }, [charIndex, currentLineIndex, lines, typingSpeed, delayBetweenLines])
+
+  return { ref, displayedText, currentLineIndex }
 }

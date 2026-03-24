@@ -1,14 +1,16 @@
 import { useRef, useEffect } from 'react'
+import { useSectionTransition } from '../hooks/useSectionTransition'
 import gsap from 'gsap'
 
 export const Footer = () => {
+  const footerRef = useSectionTransition({ animationType: 'slideUp', duration: 0.8 })
   const socialRef = useRef<HTMLDivElement>(null)
 
   const socials = [
-    { icon: '💼', label: 'LinkedIn', link: 'https://linkedin.com' },
-    { icon: '🐙', label: 'GitHub', link: 'https://github.com' },
-    { icon: '𝕏', label: 'Twitter', link: 'https://twitter.com' },
-    { icon: '💬', label: 'Email', link: 'mailto:akshay@example.com' },
+    { icon: 'devicon-linkedin-plain colored', label: 'LinkedIn', link: 'https://www.linkedin.com/in/akshay-m-7b2a69228/', isDevicon: true },
+    { icon: 'https://www.naukri.com/favicon.ico', label: 'Naukri', link: 'https://www.naukri.com/mnjuser/profile?id=&altresid', isImage: true },
+    { icon: 'https://img.icons8.com/?size=100&id=NdqqxfTuEK6C&format=png&color=000000', label: 'Instagram', link: 'https://www.instagram.com/akshay_crz?utm_source=qr&igsh=MWFpNDhma3hlZzk5MA==', isImage: true },
+    { icon: 'https://img.icons8.com/?size=100&id=qyRpAggnV0zH&format=png&color=000000', label: 'Email', link: 'mailto:akshaykrishmepp@gmail.com', isImage: true },
   ]
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export const Footer = () => {
   }, [])
 
   return (
-    <footer className="bg-dark-900 border-t border-white/5">
+    <footer ref={footerRef} className="bg-gradient-to-b from-dark-900/50 to-dark-900 border-t border-white/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Brand */}
@@ -84,9 +86,15 @@ export const Footer = () => {
                   title={social.label}
                   className="social-btn w-12 h-12 rounded-lg glass-effect flex items-center justify-center text-xl hover:text-accent-blue transition-colors duration-300 group"
                 >
-                  <span className="group-hover:scale-110 transition-transform duration-300">
-                    {social.icon}
-                  </span>
+                  {social.isDevicon ? (
+                    <i className={`${social.icon} text-2xl group-hover:scale-110 transition-transform duration-300 inline-block`} />
+                  ) : social.isImage ? (
+                    <img src={social.icon} alt={social.label} className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                  ) : (
+                    <span className="group-hover:scale-110 transition-transform duration-300">
+                      {social.icon}
+                    </span>
+                  )}
                 </a>
               ))}
             </div>
