@@ -101,12 +101,13 @@ export const Experience = () => {
         </div>
 
         {/* Timeline */}
-        <div className="relative flex flex-row justify-between items-start space-x-4 md:space-x-8">
-          {/* Horizontal timeline line */}
-          <div className="absolute top-4 left-0 right-0 h-px bg-gradient-to-r from-accent-blue/50 to-accent-purple/50" />
+        <div className="relative flex flex-col md:flex-row justify-start md:justify-between items-start space-y-6 md:space-y-0 md:space-x-8">
+          {/* Timeline line */}
+          <div className="absolute inset-x-0 top-4 hidden md:block h-px bg-gradient-to-r from-accent-blue/50 to-accent-purple/50" />
+          <div className="absolute left-1/2 md:hidden top-0 bottom-0 w-px bg-gradient-to-b from-accent-blue/50 to-accent-purple/50" />
 
           {experiences.map((exp, idx) => (
-            <div key={idx} className="timeline-item flex flex-col items-center flex-1 max-w-xs">
+            <div key={idx} className="timeline-item flex flex-col items-center flex-1 w-full md:w-auto md:max-w-xs">
               {/* Timeline dot */}
               <div
                 className="timeline-dot w-8 h-8 rounded-full bg-accent-blue border-4 border-dark-900 relative z-10"
@@ -119,7 +120,7 @@ export const Experience = () => {
               />
               {/* Content */}
               <div
-                className="timeline-card glass-effect p-6 rounded-2xl mt-4 text-center"
+                className="timeline-card glass-effect p-6 rounded-2xl mt-4 text-center w-full max-w-full"
                 style={{
                   opacity: 0,
                   transform: 'translateY(50px)',

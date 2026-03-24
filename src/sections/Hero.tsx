@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -20,7 +20,9 @@ export const Hero = () => {
   const subtitleRef = useRef<HTMLDivElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
   const akshayRef = useRef<HTMLSpanElement>(null)
+  const resumeRef = useRef<HTMLAnchorElement>(null)
   const [colorIndex, setColorIndex] = useState(0)
+  const [isDownloadingResume, setIsDownloadingResume] = useState(false)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -64,14 +66,19 @@ export const Hero = () => {
         1.5
       )
 
-      // CTA
-      tl.from(
-        ctaRef.current?.querySelectorAll('button') || [],
+      // CTA: include both buttons and anchor links (Resume)
+      tl.fromTo(
+        ctaRef.current?.querySelectorAll('button, a') || [],
         {
           opacity: 0,
           y: 20,
-          duration: 0.5,
-          stagger: 0.12,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          stagger: 0.09,
+          ease: 'power3.out',
         },
         1.8
       )
@@ -117,10 +124,56 @@ export const Hero = () => {
     return () => clearInterval(interval)
   }, [colorIndex])
 
+  const handleResumeClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+
+    if (isDownloadingResume || !resumeRef.current) return
+
+    setIsDownloadingResume(true)
+    gsap.fromTo(
+      resumeRef.current,
+      { scale: 1, boxShadow: '0 0 0 rgba(0,0,0,0)' },
+      {
+        duration: 0.3,
+        scale: 1.12,
+        boxShadow: '0 0 20px rgba(56,189,248,0.45)',
+        yoyo: true,
+        repeat: 1,
+        onComplete: () => {
+          setIsDownloadingResume(false)
+          const link = document.createElement('a')
+          link.href = '/resume.docx'
+          link.download = 'resume.docx'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        },
+      }
+    )
+  }
+
+  useEffect(() => {
+    if (!resumeRef.current) return
+
+    const el = resumeRef.current
+    const onEnter = () => gsap.to(el, { duration: 0.2, scale: 1.05, backgroundColor: 'rgba(255,255,255,0.16)', ease: 'power1.out' })
+    const onLeave = () => gsap.to(el, { duration: 0.2, scale: 1, backgroundColor: 'rgba(255,255,255,0.1)', ease: 'power1.inOut' })
+
+    el.addEventListener('mouseenter', onEnter)
+    el.addEventListener('mouseleave', onLeave)
+
+    return () => {
+      el.removeEventListener('mouseenter', onEnter)
+      el.removeEventListener('mouseleave', onLeave)
+    }
+  }, [])
+  
+
   
 
   return (
     <section
+      id="home"
       ref={containerRef}
       className="relative w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
@@ -178,12 +231,16 @@ export const Hero = () => {
           ref={ctaRef}
           className="mt-8 flex gap-4 justify-center flex-wrap"
         >
-          <button className="px-6 py-3 bg-cyan-400 text-black rounded-lg">
-            View Work
-          </button>
-          <button className="px-6 py-3 border border-white/20 text-white rounded-lg">
-            Resume
-          </button>
+          <a 
+            ref={resumeRef}
+            href="/resume.docx"
+            download="resume.docx"
+            onClick={handleResumeClick}
+            className={`relative z-20 inline-flex items-center justify-center px-6 py-3 border border-white/30 text-white bg-white/10 shadow-lg shadow-cyan-500/20 rounded-lg transition-all duration-300 transform ${isDownloadingResume ? 'scale-105 bg-cyan-500/30 border-cyan-300' : 'hover:bg-white/20 hover:border-white/40 hover:scale-105'}`}
+            aria-live="polite"
+          >
+            {isDownloadingResume ? 'Preparing Resume...' : 'Resume'}
+          </a>
         </div>
       </div>
     </section>
