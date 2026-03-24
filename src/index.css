@@ -12,7 +12,6 @@
   html {
     scroll-behavior: smooth;
   }
-
   body {
     @apply bg-dark-900 text-white antialiased;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);

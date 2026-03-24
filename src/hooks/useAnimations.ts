@@ -198,7 +198,7 @@ export const useTypingAnimation = (text: string, speed: number = 30) => {
   const ref = useRef<HTMLDivElement>(null)
   const [displayedText, setDisplayedText] = useState('')
   const isUserScrollingRef = useRef(false)
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (!ref.current) return

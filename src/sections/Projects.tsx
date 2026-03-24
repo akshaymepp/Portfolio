@@ -5,201 +5,214 @@ import { useSectionTransition } from '../hooks/useSectionTransition'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const projects = [
+  {
+    title: 'Travelers',
+    type: 'Insurance Domain Project',
+    description:
+      'Travelers is one of the leading providers of property and casualty insurance in the United States, serving a wide range of personal, business, and specialty insurance needs. Headquartered in New York and operating for over 165 years, Travelers is renowned for its innovation, customer-centric approach, and strong presence in the insurance industry. Travelers offers comprehensive insurance products',
+    link: 'https://www.travelers.com/',
+    image: '/images/2dd26e023a8c3cc881feedb032a4ae6c.jpg',
+
+  },
+  {
+    title: 'LexisNexis',
+    type: 'Legal & Professional Information Project',
+    description:
+      'LexisNexis Legal Research Solutions is a leading global provider of legal, regulatory, and business information services, helping legal professionals conduct accurate research and make informed decisions. The platform offers advanced legal research tools, case law databases, and analytics to support litigation, compliance, and legal operations. Known for innovation in legal tech',
+
+    link: 'https://www.lexisnexis.com/',
+    image: '/images/2153602.jpg',
+  },
+]
+
+console.log(projects[0].link)
+
 export const Projects = () => {
   const headerRef = useSectionTransition({ animationType: 'slideUp', duration: 0.8 })
+  const sectionRef = useRef<HTMLElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-
-  const projects = [
-    {
-      title: 'The Travelers Company',
-      description:
-        'Enterprise insurance platform test automation with 95%+ coverage across regression, smoke, and functional testing.',
-      image: '🏢',
-      tech: ['Selenium', 'Java', 'TestNG', 'Cucumber', 'JMeter'],
-      link: '#',
-    },
-    {
-      title: 'API Testing & Validation',
-      description:
-        'Comprehensive API testing suite validating RESTful services, HTTP traffic analysis, and backend data consistency.',
-      image: '🔌',
-      tech: ['JMeter', 'Swagger', 'Fiddler', 'SQL', 'REST-assured'],
-      link: '#',
-    },
-    {
-      title: 'LexisNexis Platform',
-      description:
-        'Legal research solution automation using Taiko & JavaScript with end-to-end testing for complex workflows.',
-      image: '⚖️',
-      tech: ['Taiko', 'JavaScript', 'Manual Testing', 'UI Testing'],
-      link: '#',
-    },
-    {
-      title: 'Mobile Test Framework',
-      description:
-        'Cross-platform mobile automation framework supporting iOS and Android with Appium integration.',
-      image: '📱',
-      tech: ['Appium', 'Mobile Testing', 'TestNG', 'CI/CD'],
-      link: '#',
-    },
-    {
-      title: 'Performance Testing',
-      description:
-        'Load and stress testing implementation identifying bottlenecks and optimizing application performance.',
-      image: '⚡',
-      tech: ['LoadRunner', 'JMeter', 'Grafana', 'Performance Analysis'],
-      link: '#',
-    },
-    {
-      title: 'Test Data Management',
-      description:
-        'Automated test data generation and cleanup scripts ensuring data integrity across test environments.',
-      image: '💾',
-      tech: ['SQL', 'MongoDB', 'Python', 'Database Management'],
-      link: '#',
-    },
-  ]
 
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!sectionRef.current || !containerRef.current) return
 
-    // Stagger animation for cards
-    cardsRef.current.forEach((card) => {
-      if (!card) return
+    // Set initial visible state on all cards
+    const cards = containerRef.current.querySelectorAll('article')
+    gsap.set(cards, { opacity: 1, y: 0, scale: 1 })
 
-      gsap.fromTo(
-        card,
-        {
-          opacity: 0,
-          y: 60,
-          scale: 0.8,
+    const ctx = gsap.context(() => {
+      // Parallax background subtle drift
+      gsap.to(sectionRef.current, {
+        y: 20,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
         },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: 'power2.out',
+      })
+
+      // Select all cards from DOM
+      const allCards = containerRef.current?.querySelectorAll('article') || []
+
+      allCards.forEach((card) => {
+        const title = card.querySelector('.project-title')
+        const subtitle = card.querySelector('.project-type')
+        const copy = card.querySelector('.project-copy')
+        const tags = card.querySelectorAll('.project-tag')
+        const details = card.querySelector('.project-details')
+
+        if (!title || !subtitle || !copy || !details) return
+
+        // Create staggered animations on scroll
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: card,
             start: 'top 85%',
             once: true,
           },
-        }
-      )
-
-      // Hover effects
-      card.addEventListener('mouseenter', () => {
-        gsap.to(card, {
-          y: -15,
-          boxShadow: '0 0 60px rgba(0, 217, 255, 0.4)',
-          duration: 0.3,
-          ease: 'power2.out',
         })
 
-        gsap.to(card.querySelector('.project-overlay'), {
-          opacity: 1,
-          duration: 0.3,
+        tl.from(
+          card,
+          {
+            opacity: 0,
+            y: 60,
+            scale: 0.98,
+            duration: 0.75,
+            ease: 'power3.out',
+          },
+          0
+        )
+          .from([title, subtitle, copy], { opacity: 0, y: 20, stagger: 0.12, duration: 0.35 }, 0.1)
+          .from(tags, { opacity: 0, y: 12, stagger: 0.08, duration: 0.3 }, 0.35)
+          .from(details, { opacity: 0, x: -20, duration: 0.35 }, 0.55)
+
+        // Hover effects
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, {
+            scale: 1.03,
+            boxShadow: '0 20px 50px rgba(79, 70, 229, 0.45)',
+            duration: 0.35,
+            ease: 'power1.out',
+          })
+
+          const hoverEl = card.querySelector('.project-hover')
+          if (hoverEl) {
+            gsap.to(hoverEl, {
+              opacity: 1,
+              y: 0,
+              duration: 0.2,
+              ease: 'power1.out',
+            })
+          }
+        })
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, {
+            scale: 1,
+            boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+            duration: 0.35,
+            ease: 'power1.out',
+          })
+
+          const hoverEl = card.querySelector('.project-hover')
+          if (hoverEl) {
+            gsap.to(hoverEl, {
+              opacity: 0,
+              y: 10,
+              duration: 0.2,
+              ease: 'power1.out',
+            })
+          }
         })
       })
 
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          y: 0,
-          boxShadow: '0 0 30px rgba(0, 217, 255, 0)',
-          duration: 0.3,
-          ease: 'power2.out',
-        })
-
-        gsap.to(card.querySelector('.project-overlay'), {
-          opacity: 0,
-          duration: 0.3,
-        })
-      })
-    })
+      // Refresh to catch any cards already in viewport
+      ScrollTrigger.refresh()
+    }, sectionRef)
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      ctx.revert()
     }
   }, [])
 
   return (
-    <section id="projects" className="py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative overflow-hidden py-24"
+      style={{ backgroundColor: '#06070a' }}
+    >
+      {/* gradient blobs */}
+      <div className="pointer-events-none absolute -left-16 -top-16 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute right-0 top-1/4 h-72 w-72 rounded-full bg-sky-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 left-1/4 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
+
+      {/* subtle grid overlay */}
+      <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headerRef} className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-poppins font-bold mb-4">
-            Featured <span className="gradient-text">Projects</span>
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-3">
+            Projects
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            A collection of QA automation and testing solutions I've built and deployed across
-            various platforms and technologies.
+          <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto">
+            Hands-on projects I’ve worked on
           </p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, idx) => (
-            <div
-              key={idx}
-              ref={(el) => {
-                cardsRef.current[idx] = el
-              }}
-              className="glass-effect rounded-2xl overflow-hidden group cursor-pointer relative"
+        <div ref={containerRef} className="space-y-5">
+          {projects.map((project) => (
+            <article
+              key={project.title}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl transition-all duration-300 min-h-[50px]"
             >
-              {/* Project Image/Icon Area */}
-              <div className="h-48 bg-gradient-to-br from-accent-blue/20 via-accent-purple/10 to-accent-cyan/20 flex items-center justify-center text-7xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10 group-hover:scale-110 transition-transform duration-300">
-                  {project.image}
-                </span>
-              </div>
+              <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-r from-cyan-500/20 via-indigo-500/15 to-purple-500/20 pointer-events-none pointer-events-none pointer-events-none" />
+              <div className="relative z-10 flex flex-col lg:flex-row gap-6 p-8 lg:p-10 lg:items-center">
+                <div className="flex-shrink-0 h-50 w-60 rounded-xl overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={`${project.title} logo`}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
 
-              {/* Project Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-poppins font-bold mb-3 group-hover:text-accent-blue transition-colors duration-300">
-                  {project.title}
-                </h3>
-                <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                  {project.description}
-                </p>
+                <div className="flex-1 space-y-4">
+                  <p className="project-type text-sm uppercase tracking-widest text-cyan-300/80 font-semibold">
+                    {project.type}
+                  </p>
+                  <h3 className="project-title text-2xl md:text-3xl font-bold text-white">
+                    {project.title}
+                  </h3>
+                  <p className="project-copy text-slate-300 leading-relaxed">
+                    {project.description}
+                  </p>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tech.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="text-xs bg-accent-blue/20 text-accent-blue rounded-full px-3 py-1 border border-accent-blue/30"
+
+
+                  <div className="mt-4">
+                    <a
+                      href={project.link}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-300 hover:text-cyan-100 transition-all duration-300"
                     >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-4">
-                  <a
-                    href={project.link}
-                    className="flex-1 text-center py-2 rounded-lg bg-accent-blue/20 text-accent-blue hover:bg-accent-blue/40 transition-colors duration-300 text-sm font-medium"
-                  >
-                    View Project
-                  </a>
-                  <a
-                    href={project.link}
-                    className="flex-1 text-center py-2 rounded-lg border border-accent-blue/30 text-gray-300 hover:border-accent-blue/70 hover:text-accent-blue transition-colors duration-300 text-sm font-medium"
-                  >
-                    GitHub
-                  </a>
+                      View Details
+                      <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              {/* Overlay */}
-              <div className="project-overlay absolute inset-0 bg-gradient-to-br from-accent-blue/10 to-accent-purple/10 pointer-events-none opacity-0" />
-            </div>
+              <div className="absolute bottom-4 right-4 rounded-full bg-cyan-400/20 px-4 py-2 text-xs text-cyan-100 opacity-0 translate-y-4 transition-all duration-300 pointer-events-none">
+                View Details →
+              </div>
+            </article>
           ))}
         </div>
       </div>
+
+      <div className="absolute -bottom-10 left-1/2 h-1 w-40 -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-400/70 via-indigo-500/50 to-purple-400/70 blur-xl" />
     </section>
   )
 }
