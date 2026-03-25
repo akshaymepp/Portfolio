@@ -134,7 +134,7 @@ export const Contact = () => {
             Let's <span className="gradient-text">Work Together</span>
           </h2>
           <p className="text-gray-400 text-lg">
-            Got a project in mind? Let's connect and create something amazing.
+            Let's connect and create something amazing.
           </p>
         </div>
 
