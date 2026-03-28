@@ -128,10 +128,7 @@ const findSuggestions = (input: string, threshold = 0.4): Suggestion[] => {
  * @param input User typed text
  * @returns Best suggestion or null
  */
-const getBestSuggestion = (input: string): Suggestion | null => {
-  const suggestions = findSuggestions(input)
-  return suggestions.length > 0 ? suggestions[0] : null
-}
+
 
 const getBotResponse = (input: string) => {
   const text = input.trim().toLowerCase()
@@ -214,7 +211,7 @@ export const Chatbot = () => {
   const panelRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const suggestionsRef = useRef<HTMLDivElement | null>(null)
-  const debounceTimer = useRef<NodeJS.Timeout | null>(null)
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Smooth button entrance on first render
   useEffect(() => {
