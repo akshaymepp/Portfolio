@@ -8,6 +8,7 @@ import { Skills } from './sections/Skills'
 import { Projects } from './sections/Projects'
 import { Experience } from './sections/Experience'
 import { Contact } from './sections/Contact'
+import { Chatbot } from './sections/Chatbot'
 import { Footer } from './sections/Footer'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -39,6 +40,7 @@ function App() {
       <Experience />
       <Contact />
       <Footer />
+      <Chatbot />
     </div>
   )
 }
