@@ -4,7 +4,12 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin'
 
 gsap.registerPlugin(ScrollToPlugin)
 
-export const Navbar = () => {
+type NavbarProps = {
+  theme: 'dark' | 'light'
+  onToggleTheme: () => void
+}
+
+export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [showContactDropdown, setShowContactDropdown] = useState(false)
@@ -144,7 +149,9 @@ export const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 ${
         isScrolled
-          ? 'bg-dark-900/80 backdrop-blur-lg border-b border-accent-blue/20 shadow-lg shadow-accent-blue/5'
+          ? theme === 'light'
+            ? 'bg-white/95 backdrop-blur-lg border-b border-white/20 shadow-lg'
+            : 'bg-dark-900/80 backdrop-blur-lg border-b border-accent-blue/20 shadow-lg shadow-accent-blue/5'
           : 'bg-transparent'
       }`}
     >
@@ -158,7 +165,7 @@ export const Navbar = () => {
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white font-bold text-lg group-hover:shadow-lg group-hover:shadow-accent-blue/50 transition-all duration-300">
               A
             </div>
-            <span className="hidden sm:block font-poppins font-bold text-lg group-hover:text-accent-blue transition-colors duration-300">
+            <span className="hidden md:block font-poppins font-bold text-lg group-hover:text-accent-blue transition-colors duration-300">
               Akshay
             </span>
           </button>
@@ -186,19 +193,57 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden sm:block relative" ref={dropdownRef}>
+          {/* Theme toggle + CTA */}
+          <div className="hidden md:flex items-center gap-4 relative" ref={dropdownRef}>
+            {/* ON/OFF Toggle Switch */}
+            <button
+              onClick={onToggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="relative inline-flex h-10 w-20 items-center rounded-full transition-all duration-700 ease-in-out cursor-pointer focus:outline-none overflow-hidden"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(0, 217, 255, 0.15)' : 'rgba(255, 200, 100, 0.15)',
+                border: `2px solid ${theme === 'dark' ? 'rgba(0, 217, 255, 0.5)' : 'rgba(0, 0, 0, 0.7)'}`,
+              }}
+            >
+              {/* Background labels */}
+              <span className="absolute left-2.5 text-xs font-bold text-gray-500">ON</span>
+              <span className="absolute right-2.5 text-xs font-bold text-gray-500">OFF</span>
+
+              {/* Toggle circle */}
+              <div
+                className="absolute h-9 w-9 rounded-full transition-all duration-700 ease-in-out flex items-center justify-center text-lg z-10"
+                style={{
+                  left: theme === 'dark' ? '2px' : '40px',
+                  backgroundColor: theme === 'dark' ? '#00d9ff' : '#ffc864',
+                  boxShadow: theme === 'dark' ? '0 0 15px rgba(0, 217, 255, 0.8)' : '0 0 15px rgba(255, 200, 100, 0.8)',
+                  transform: 'scale(1)',
+                }}
+              >
+                {theme === 'dark' ? '🌙' : '☀️'}
+              </div>
+            </button>
+
             <button
               onClick={() => setShowContactDropdown(!showContactDropdown)}
-              className="glass-button hover:scale-105 active:scale-95 transition-transform duration-300"
+              className={`glass-button hover:scale-105 active:scale-95 transition-transform duration-300 z-40 ${
+                theme === 'light' ? 'light-contact-trigger' : ''
+              }`}
             >
               Get In Touch
             </button>
 
             {/* Dropdown Menu */}
             {showContactDropdown && (
-              <div className="absolute right-0 mt-3 w-56 bg-dark-800/95 backdrop-blur-sm border border-accent-blue/30 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 slide-in-from-top-2 duration-500">
-                <div className="p-4 border-b border-accent-blue/20 bg-gradient-to-r from-accent-blue/10 to-accent-purple/10">
+              <div className={`absolute right-0 top-full mt-2 w-56 backdrop-blur-sm border rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 slide-in-from-top-2 duration-500 z-50 ${
+                theme === 'light'
+                  ? 'light-contact-dropdown bg-white/95 border-white/20'
+                  : 'bg-dark-800/95 border-accent-blue/30'
+              }`}>
+                <div className={`p-4 border-b ${
+                  theme === 'light'
+                    ? 'border-white/20 bg-gradient-to-r from-yellow-100/80 to-yellow-50/90'
+                    : 'border-accent-blue/20 bg-gradient-to-r from-accent-blue/10 to-accent-purple/10'
+                }`}>
                   <p className="text-sm text-gray-300 font-semibold">Connect With Me</p>
                 </div>
                 <div className="p-3 space-y-2">
@@ -208,7 +253,11 @@ export const Navbar = () => {
                       href={social.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg bg-dark-800/30 hover:bg-accent-blue/15 group transform hover:translate-x-1 transition-all duration-300"
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg group transform hover:translate-x-1 transition-all duration-300 ${
+                        theme === 'light'
+                          ? 'light-contact-link bg-yellow-50/70 hover:bg-yellow-100/90'
+                          : 'bg-dark-800/30 hover:bg-accent-blue/15'
+                      }`}
                       style={{
                         animation: `slideInRight 0.5s ease-out ${idx * 0.08}s both`,
                       }}
@@ -229,7 +278,30 @@ export const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={onToggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="relative inline-flex h-9 w-[72px] items-center rounded-full transition-all duration-700 ease-in-out cursor-pointer focus:outline-none overflow-hidden"
+              style={{
+                backgroundColor: theme === 'dark' ? 'rgba(0, 217, 255, 0.15)' : 'rgba(255, 200, 100, 0.15)',
+                border: `2px solid ${theme === 'dark' ? 'rgba(0, 217, 255, 0.5)' : 'rgba(0, 0, 0, 0.7)'}`,
+              }}
+            >
+              <span className="absolute left-2 text-[10px] font-bold text-gray-500">ON</span>
+              <span className="absolute right-2 text-[10px] font-bold text-gray-500">OFF</span>
+              <div
+                className={`absolute left-[2px] h-7 w-7 rounded-full transition-transform duration-700 ease-in-out flex items-center justify-center text-sm z-10 ${
+                  theme === 'dark' ? 'translate-x-0' : 'translate-x-[38px]'
+                }`}
+                style={{
+                  backgroundColor: theme === 'dark' ? '#00d9ff' : '#ffc864',
+                  boxShadow: theme === 'dark' ? '0 0 15px rgba(0, 217, 255, 0.8)' : '0 0 15px rgba(255, 200, 100, 0.8)',
+                }}
+              >
+                {theme === 'dark' ? '🌙' : '☀️'}
+              </div>
+            </button>
             <button
               onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle mobile navigation"
@@ -256,25 +328,37 @@ export const Navbar = () => {
 
       {/* Mobile Slide-out / dropdown menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-dark-900/95 backdrop-blur-lg border-t border-accent-blue/20 shadow-lg transform transition-all duration-300 ease-in-out opacity-100 translate-y-0 pointer-events-auto">
+        <div className={`md:hidden backdrop-blur-lg border-t shadow-lg transform transition-all duration-300 ease-in-out opacity-100 translate-y-0 pointer-events-auto ${
+          theme === 'light'
+            ? 'bg-white/95 border-white/20'
+            : 'bg-dark-900/95 border-accent-blue/20'
+        }`}>
           <div className="flex flex-col gap-2 p-2">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
                 className={`text-left w-full px-2 py-1 rounded-lg text-xs font-medium ${
-                  activeSection === link.id ? 'text-accent-blue' : 'text-gray-300 hover:text-white'
+                  activeSection === link.id
+                    ? 'text-accent-blue'
+                    : theme === 'light'
+                      ? 'text-[var(--text-color)] hover:text-accent-blue'
+                      : 'text-gray-300 hover:text-white'
                 }`}
               >
                 {link.label}
               </button>
             ))}
-            <button
+              <button
               onClick={() => {
                 setIsMobileContactOpen((prev) => !prev)
                 setShowContactDropdown(false)
               }}
-              className="text-center min-w-[72px] px-2 py-1 text-xs text-gray-300 hover:text-white rounded-lg border border-accent-blue/20 sm:hidden"
+              className={`text-center min-w-[72px] px-2 py-1 text-xs rounded-lg border sm:hidden ${
+                theme === 'light'
+                  ? 'bg-white text-[var(--text-color)] border-white/20 hover:bg-yellow-50'
+                  : 'text-gray-300 hover:text-white border-accent-blue/20'
+              }`}
             >
               Get In Touch
             </button>
@@ -290,7 +374,11 @@ export const Navbar = () => {
                     href={social.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 px-2 py-1 rounded-md bg-dark-800/80 hover:bg-accent-blue/20 text-xs text-gray-200"
+                    className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs ${
+                      theme === 'light'
+                        ? 'bg-yellow-50/90 hover:bg-yellow-100 text-[var(--text-color)]'
+                        : 'bg-dark-800/80 hover:bg-accent-blue/20 text-gray-200'
+                    }`}
                   >
                     {social.isDevicon ? (
                       <i className={`${social.icon} text-sm`} />

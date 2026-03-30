@@ -30,7 +30,7 @@ export const Skills = () => {
   const headerRef = useSectionTransition({ animationType: 'slideUp', duration: 0.8 })
 
   return (
-    <section id="skills" className="py-24 bg-gradient-to-b from-dark-900/50 to-dark-900 w-full">
+    <section id="skills" className="skills-section py-24 bg-gradient-to-b from-dark-900/50 to-dark-900 w-full">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16 max-w-6xl mx-auto">
@@ -69,8 +69,8 @@ export const Skills = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="absolute top-0 left-0 w-[100px] h-full bg-gradient-to-r from-[#0a0a0a] to-transparent pointer-events-none z-20" />
-          <div className="absolute top-0 right-0 w-[100px] h-full bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none z-20" />
+          <div className="skill-fade-left absolute top-0 left-0 w-[100px] h-full bg-gradient-to-r from-[#0a0a0a] to-transparent pointer-events-none z-20" />
+          <div className="skill-fade-right absolute top-0 right-0 w-[100px] h-full bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none z-20" />
         </div>
 
         {/* Skills Slider 2 - Slides Left */}
@@ -99,8 +99,8 @@ export const Skills = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="absolute top-0 left-0 w-[100px] h-full bg-gradient-to-r from-[#0a0a0a] to-transparent pointer-events-none z-20" />
-          <div className="absolute top-0 right-0 w-[100px] h-full bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none z-20" />
+          <div className="skill-fade-left absolute top-0 left-0 w-[100px] h-full bg-gradient-to-r from-[#0a0a0a] to-transparent pointer-events-none z-20" />
+          <div className="skill-fade-right absolute top-0 right-0 w-[100px] h-full bg-gradient-to-l from-[#0a0a0a] to-transparent pointer-events-none z-20" />
         </div>
       </div>
     </section>

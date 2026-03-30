@@ -142,16 +142,16 @@ export const Projects = () => {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative overflow-hidden py-24"
-      style={{ backgroundColor: '#06070a' }}
+      className="projects-section relative overflow-hidden py-24"
+      style={{ backgroundColor: 'var(--bg-color)' }}
     >
       {/* gradient blobs */}
-      <div className="pointer-events-none absolute -left-16 -top-16 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute right-0 top-1/4 h-72 w-72 rounded-full bg-sky-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 left-1/4 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
+      <div className="project-blob pointer-events-none absolute -left-16 -top-16 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl" />
+      <div className="project-blob pointer-events-none absolute right-0 top-1/4 h-72 w-72 rounded-full bg-sky-500/20 blur-3xl" />
+      <div className="project-blob pointer-events-none absolute -bottom-20 left-1/4 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
 
       {/* subtle grid overlay */}
-      <div className="pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+      <div className="project-grid pointer-events-none absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={headerRef} className="text-center mb-16">
@@ -167,11 +167,11 @@ export const Projects = () => {
           {projects.map((project) => (
             <article
               key={project.title}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl transition-all duration-300 min-h-[50px]"
+              className="project-card group relative overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-2xl transition-all duration-300 min-h-[50px]"
             >
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-r from-cyan-500/20 via-indigo-500/15 to-purple-500/20 pointer-events-none pointer-events-none pointer-events-none" />
+              <div className="project-overlay absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-r from-cyan-500/20 via-indigo-500/15 to-purple-500/20 pointer-events-none pointer-events-none pointer-events-none" />
               <div className="relative z-10 flex flex-col lg:flex-row gap-6 p-8 lg:p-10 lg:items-center">
-                <div className="flex-shrink-0 h-50 w-60 rounded-xl overflow-hidden">
+                <div className="project-image-shell flex-shrink-0 h-50 w-60 rounded-xl overflow-hidden">
                   <img
                     src={project.image}
                     alt={`${project.title} logo`}
@@ -195,7 +195,7 @@ export const Projects = () => {
                   <div className="mt-4">
                     <a
                       href={project.link}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-cyan-300 hover:text-cyan-100 transition-all duration-300"
+                      className="project-link inline-flex items-center gap-2 text-sm font-medium text-cyan-300 hover:text-cyan-100 transition-all duration-300"
                     >
                       View Details
                       <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -212,7 +212,7 @@ export const Projects = () => {
         </div>
       </div>
 
-      <div className="absolute -bottom-10 left-1/2 h-1 w-40 -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-400/70 via-indigo-500/50 to-purple-400/70 blur-xl" />
+      <div className="project-glow absolute -bottom-10 left-1/2 h-1 w-40 -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-400/70 via-indigo-500/50 to-purple-400/70 blur-xl" />
     </section>
   )
 }

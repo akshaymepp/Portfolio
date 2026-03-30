@@ -41,6 +41,8 @@ export default {
         'slideInLeftFade': 'slideInLeftFade 0.7s ease-out forwards',
         'slideInRightFade': 'slideInRightFade 0.7s ease-out forwards',
         'scaleInFade': 'scaleInFade 0.7s ease-out forwards',
+        'spin-slow': 'spin 3s linear infinite',
+        'bounce-gentle': 'bounceGentle 1.5s ease-in-out infinite',
       },
       keyframes: {
         fadeIn: {
@@ -74,6 +76,10 @@ export default {
         glowPulse: {
           '0%, 100%': { boxShadow: '0 0 20px rgba(0, 217, 255, 0.3)' },
           '50%': { boxShadow: '0 0 30px rgba(0, 217, 255, 0.6)' },
+        },
+        bounceGentle: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-4px)' },
         },
       },
       boxShadow: {

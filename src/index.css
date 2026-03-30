@@ -12,10 +12,262 @@
   html {
     scroll-behavior: smooth;
   }
+  :root {
+    --bg-color: #0f0f0f;
+    --text-color: #f5f5f5;
+    --text-secondary: #b0b0b0;
+    --surface-color: #1a1a2e;
+    --card-bg-color: #1f1f30;
+    --border-color: #2a2a3d;
+    --accent-color: #00d9ff;
+    --button-bg: rgba(255, 255, 255, 0.08);
+    --button-bg-hover: rgba(255, 255, 255, 0.15);
+    --button-text: #f5f5f5;
+  }
+
+  .light {
+    --bg-color: #ffffff;
+    --text-color: #2f2400;
+    --text-secondary: #7a6718;
+    --surface-color: #fffaf0;
+    --card-bg-color: #fffdf7;
+    --border-color: rgba(0, 0, 0, 0.28);
+    --accent-color: #f2b705;
+    --button-bg: rgba(242, 183, 5, 0.12);
+    --button-bg-hover: rgba(242, 183, 5, 0.2);
+    --button-text: #2f2400;
+  }
+
   body {
-    @apply bg-dark-900 text-white antialiased;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    background: var(--bg-color);
+    color: var(--text-color);
+    @apply antialiased;
     font-feature-settings: "rounding" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body.theme-transition {
+    animation: themeFade 0.25s ease-in-out;
+  }
+
+  @keyframes themeFade {
+    from {
+      opacity: 0.85;
+      transform: scale(0.998);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  body a,
+  body button,
+  body input,
+  body textarea,
+  body select,
+  body label {
+    color: var(--text-color);
+  }
+
+  .text-white {
+    color: var(--text-color) !important;
+  }
+
+  .text-gray-300,
+  .text-gray-400 {
+    color: var(--text-secondary) !important;
+  }
+
+  .bg-dark-900,
+  .bg-dark-800,
+  .bg-dark-700 {
+    background-color: var(--surface-color) !important;
+  }
+
+  .bg-white {
+    background-color: var(--card-bg-color) !important;
+  }
+
+  .border-accent-blue\/20,
+  .border-accent-blue {
+    border-color: var(--accent-color) !important;
+  }
+
+  .light .text-accent-blue,
+  .light .text-accent-cyan,
+  .light .text-accent-purple {
+    color: #d89b00 !important;
+  }
+
+  .light .bg-accent-blue,
+  .light .bg-accent-cyan,
+  .light .bg-accent-purple {
+    background-color: #f2b705 !important;
+  }
+
+  .light .from-accent-blue,
+  .light .from-accent-cyan,
+  .light .from-accent-purple {
+    --tw-gradient-from: #ffe082 var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(255 224 130 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+  }
+
+  .light .via-accent-blue,
+  .light .via-accent-cyan,
+  .light .via-accent-purple {
+    --tw-gradient-via: #f2b705 var(--tw-gradient-via-position) !important;
+    --tw-gradient-to: rgb(242 183 5 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to) !important;
+  }
+
+  .light .to-accent-blue,
+  .light .to-accent-cyan,
+  .light .to-accent-purple {
+    --tw-gradient-to: #d89b00 var(--tw-gradient-to-position) !important;
+  }
+
+  .light .hover\:text-accent-blue:hover,
+  .light .hover\:text-accent-cyan:hover,
+  .light .hover\:text-accent-purple:hover {
+    color: #d89b00 !important;
+  }
+
+  .light .hover\:border-accent-blue\/60:hover,
+  .light .hover\:border-accent-cyan\/60:hover,
+  .light .hover\:border-accent-purple\/60:hover,
+  .light .hover\:border-accent-blue\/50:hover {
+    border-color: rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .light .hover\:bg-accent-blue\/15:hover,
+  .light .hover\:bg-accent-blue\/20:hover {
+    background-color: rgba(242, 183, 5, 0.16) !important;
+  }
+
+  .light .border-accent-blue\/20,
+  .light .border-accent-blue\/30,
+  .light .border-accent-cyan\/30,
+  .light .border-white\/5,
+  .light .border-white\/10,
+  .light .border-white\/15,
+  .light .border-white\/20,
+  .light .border-white\/30,
+  .light .border-white\/40,
+  .light .border-dark-900 {
+    border-color: rgba(0, 0, 0, 0.28) !important;
+  }
+
+  .light .shadow-accent-blue\/5,
+  .light .group-hover\:shadow-accent-blue\/50 {
+    --tw-shadow-color: rgba(242, 183, 5, 0.35) !important;
+  }
+
+  .light .hover\:text-white:hover,
+  .light .text-white {
+    color: #2f2400 !important;
+  }
+
+  .light .about-section {
+    background: #ffffff !important;
+  }
+
+  .light .experience-section {
+    background: #ffffff !important;
+  }
+
+  .light .experience-skill-tag {
+    background: #4a4a4a !important;
+    color: #ffffff !important;
+    border-color: #4a4a4a !important;
+  }
+
+  .light .skills-section {
+    background: #ffffff !important;
+  }
+
+  .light .skill-fade-left {
+    background: linear-gradient(to right, #ffffff 0%, transparent 100%) !important;
+  }
+
+  .light .skill-fade-right {
+    background: linear-gradient(to left, #ffffff 0%, transparent 100%) !important;
+  }
+
+  .light .projects-section {
+    background: #ffffff !important;
+  }
+
+  .light .project-blob,
+  .light .project-glow {
+    display: none;
+  }
+
+  .light .project-grid {
+    opacity: 0.05 !important;
+  }
+
+  .light .project-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(255, 249, 235, 0.92)) !important;
+    border-color: rgba(0, 0, 0, 0.28) !important;
+    box-shadow: 0 20px 50px rgba(177, 138, 28, 0.12), 0 8px 18px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .light .project-card:hover {
+    box-shadow: 0 28px 60px rgba(177, 138, 28, 0.18), 0 10px 24px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .light .project-overlay {
+    background: linear-gradient(135deg, rgba(255, 214, 102, 0.16), rgba(255, 255, 255, 0.06), rgba(242, 183, 5, 0.12)) !important;
+  }
+
+  .light .project-image-shell {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .light .projects-section .text-slate-300,
+  .light .projects-section .project-copy {
+    color: #5c4b17 !important;
+  }
+
+  .light .projects-section .project-type,
+  .light .projects-section .project-link {
+    color: #c58b00 !important;
+  }
+
+  .light .contact-section {
+    background: #ffffff !important;
+  }
+
+  .light .footer-section {
+    background: #ffffff !important;
+  }
+
+  .light .light-contact-trigger {
+    background: rgba(255, 248, 220, 0.88) !important;
+    border-color: rgba(0, 0, 0, 0.18) !important;
+    box-shadow: 0 12px 28px rgba(188, 145, 34, 0.12);
+  }
+
+  .light .light-contact-trigger:hover {
+    background: rgba(255, 239, 184, 0.96) !important;
+    border-color: rgba(0, 0, 0, 0.28) !important;
+    box-shadow: 0 16px 32px rgba(188, 145, 34, 0.16);
+  }
+
+  .light .light-contact-dropdown {
+    box-shadow: 0 22px 50px rgba(190, 150, 38, 0.14), 0 10px 24px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .light .light-contact-link {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .light .light-contact-link:hover {
+    border-color: rgba(0, 0, 0, 0.18);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -38,8 +290,59 @@
 
   .glass-button {
     @apply relative px-6 py-3 rounded-xl font-medium transition-all duration-300;
-    @apply bg-white/5 border border-white/20 hover:bg-white/10;
-    @apply hover:shadow-glow-md hover:border-accent-blue/50;
+    background-color: var(--button-bg);
+    border: 1px solid var(--border-color);
+    color: var(--button-text);
+  }
+
+  .glass-button:hover {
+    background-color: var(--button-bg-hover);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(242, 183, 5, 0.3);
+    transform: scale(1.05);
+  }
+
+  button, a.button {
+    color: var(--button-text);
+    transition: all 0.3s ease;
+  }
+
+  button:hover, a.button:hover {
+    background-color: var(--button-bg-hover);
+  }
+
+  /* Theme toggle button animations */
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
+
+  .animate-bounce-gentle {
+    animation: bounceGentle 1.5s ease-in-out infinite;
+  }
+
+  @keyframes bounceGentle {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+  }
+
+  @keyframes iconFlip {
+    from {
+      opacity: 0;
+      transform: rotateY(90deg);
+    }
+    to {
+      opacity: 1;
+      transform: rotateY(0deg);
+    }
+  }
+
+  /* Theme button icon transition */
+  svg {
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .glow-border {
@@ -56,14 +359,10 @@
     @apply opacity-100;
   }
 
-  /* Devicon colors on hover only */
+  /* Keep devicon colors visible */
   .skill-card i.colored {
-    filter: grayscale(100%);
-    transition: filter 300ms;
-  }
-
-  .skill-card:hover i.colored {
     filter: grayscale(0%);
+    transition: filter 300ms;
   }
 
   /* Text color on hover */

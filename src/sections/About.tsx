@@ -28,7 +28,7 @@ Provided regular test reports, bug analysis, and QA sign-offs to support release
 
 
   return (
-    <section id="about" className="py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
+    <section id="about" className="about-section py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={fadeRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           {/* Left - What I Do Section */}

@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
+import { useRef, useEffect } from 'react'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { useSectionTransition } from '../hooks/useSectionTransition'
 
@@ -87,7 +87,7 @@ export const Experience = () => {
     <section
       id="experience"
       ref={sectionRef}
-      className="py-24 bg-gradient-to-b from-dark-900/50 to-dark-900"
+      className="experience-section py-24 bg-gradient-to-b from-dark-900/50 to-dark-900"
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -141,7 +141,7 @@ export const Experience = () => {
                   {exp.skills.map((skill, i) => (
                     <span
                       key={i}
-                      className="text-xs bg-accent-cyan/20 text-accent-cyan rounded-full px-2 py-1 border border-accent-cyan/30"
+                      className="experience-skill-tag text-xs bg-accent-cyan/20 text-accent-cyan rounded-full px-2 py-1 border border-accent-cyan/30"
                     >
                       {skill}
                     </span>

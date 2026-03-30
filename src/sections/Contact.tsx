@@ -126,7 +126,7 @@ export const Contact = () => {
   }
 
   return (
-    <section id="contact" className="py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
+    <section id="contact" className="contact-section py-24 bg-gradient-to-b from-dark-900 to-dark-900/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">

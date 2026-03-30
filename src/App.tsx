@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import { Navbar } from './sections/Navbar'
@@ -13,12 +13,31 @@ import { Footer } from './sections/Footer'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function App() {
-  useEffect(() => {
-    // Initialize smooth scrolling
-    gsap.registerPlugin(ScrollTrigger)
+type ThemeMode = 'dark' | 'light'
 
-    // Refresh ScrollTrigger on window resize
+function App() {
+  const [theme, setTheme] = useState<ThemeMode>('dark')
+
+  useEffect(() => {
+    const stored = localStorage.getItem('theme') as ThemeMode | null
+    const initialTheme = stored === 'light' ? 'light' : 'dark'
+    setTheme(initialTheme)
+    document.body.classList.toggle('light', initialTheme === 'light')
+  }, [])
+
+  useEffect(() => {
+    document.body.classList.toggle('light', theme === 'light')
+    localStorage.setItem('theme', theme)
+
+    // Trigger fade animation on each theme switch
+    document.body.classList.remove('theme-transition')
+    void document.body.offsetWidth
+    document.body.classList.add('theme-transition')
+  }, [theme])
+
+  const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
+
+  useEffect(() => {
     const handleResize = () => {
       ScrollTrigger.refresh()
     }
@@ -31,8 +50,8 @@ function App() {
   }, [])
 
   return (
-    <div className="bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 text-white overflow-hidden">
-      <Navbar />
+    <div className="min-h-screen bg-[var(--bg-color)] text-[var(--text-color)] transition-all duration-300 overflow-hidden">
+      <Navbar theme={theme} onToggleTheme={toggleTheme} />
       <Hero />
       <About />
       <Skills />
