@@ -165,18 +165,18 @@ export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-blue to-accent-purple flex items-center justify-center text-white font-bold text-lg group-hover:shadow-lg group-hover:shadow-accent-blue/50 transition-all duration-300">
               A
             </div>
-            <span className="hidden md:block font-poppins font-bold text-lg group-hover:text-accent-blue transition-colors duration-300">
+            <span className="hidden md:block font-poppins font-semibold text-base lg:text-lg group-hover:text-accent-blue transition-colors duration-300">
               Akshay
             </span>
           </button>
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-4 lg:gap-8">
             {navLinks.map((link) => (
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className={`font-sans text-sm font-medium relative group ${
+                className={`font-sans text-[11px] lg:text-sm font-medium relative group whitespace-nowrap ${
                   activeSection === link.id
                     ? 'text-accent-blue'
                     : 'text-gray-400 hover:text-white'
@@ -194,26 +194,26 @@ export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
           </div>
 
           {/* Theme toggle + CTA */}
-          <div className="hidden md:flex items-center gap-4 relative" ref={dropdownRef}>
+          <div className="hidden md:flex items-center gap-2 lg:gap-4 relative shrink-0" ref={dropdownRef}>
             {/* ON/OFF Toggle Switch */}
             <button
               onClick={onToggleTheme}
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="relative inline-flex h-10 w-20 items-center rounded-full transition-all duration-700 ease-in-out cursor-pointer focus:outline-none overflow-hidden"
+              className="relative inline-flex h-8 w-[66px] lg:h-10 lg:w-20 items-center rounded-full transition-all duration-700 ease-in-out cursor-pointer focus:outline-none overflow-hidden"
               style={{
                 backgroundColor: theme === 'dark' ? 'rgba(0, 217, 255, 0.15)' : 'rgba(255, 200, 100, 0.15)',
                 border: `2px solid ${theme === 'dark' ? 'rgba(0, 217, 255, 0.5)' : 'rgba(0, 0, 0, 0.7)'}`,
               }}
             >
               {/* Background labels */}
-              <span className="absolute left-2.5 text-xs font-bold text-gray-500">ON</span>
-              <span className="absolute right-2.5 text-xs font-bold text-gray-500">OFF</span>
+              <span className="absolute left-2 text-[9px] lg:left-2.5 lg:text-xs font-bold text-gray-500">ON</span>
+              <span className="absolute right-2 text-[9px] lg:right-2.5 lg:text-xs font-bold text-gray-500">OFF</span>
 
               {/* Toggle circle */}
               <div
-                className="absolute h-9 w-9 rounded-full transition-all duration-700 ease-in-out flex items-center justify-center text-lg z-10"
+                className="absolute h-6 w-6 lg:h-9 lg:w-9 rounded-full transition-all duration-700 ease-in-out flex items-center justify-center text-xs lg:text-lg z-10"
                 style={{
-                  left: theme === 'dark' ? '2px' : '40px',
+                  left: theme === 'dark' ? '2px' : '32px',
                   backgroundColor: theme === 'dark' ? '#00d9ff' : '#ffc864',
                   boxShadow: theme === 'dark' ? '0 0 15px rgba(0, 217, 255, 0.8)' : '0 0 15px rgba(255, 200, 100, 0.8)',
                   transform: 'scale(1)',
@@ -225,7 +225,7 @@ export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
 
             <button
               onClick={() => setShowContactDropdown(!showContactDropdown)}
-              className={`glass-button hover:scale-105 active:scale-95 transition-transform duration-300 z-40 ${
+              className={`glass-button px-3 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm hover:scale-105 active:scale-95 transition-transform duration-300 z-40 whitespace-nowrap ${
                 theme === 'light' ? 'light-contact-trigger' : ''
               }`}
             >

@@ -10,6 +10,7 @@ import { Experience } from './sections/Experience'
 import { Contact } from './sections/Contact'
 import { Chatbot } from './sections/Chatbot'
 import { Footer } from './sections/Footer'
+import { FlappyBirdModal } from './game/FlappyBirdModal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,6 +18,7 @@ type ThemeMode = 'dark' | 'light'
 
 function App() {
   const [theme, setTheme] = useState<ThemeMode>('dark')
+  const [isGameOpen, setIsGameOpen] = useState(false)
 
   useEffect(() => {
     const stored = localStorage.getItem('theme') as ThemeMode | null
@@ -52,14 +54,15 @@ function App() {
   return (
     <div className="min-h-screen bg-[var(--bg-color)] text-[var(--text-color)] transition-all duration-300 overflow-hidden">
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
-      <Hero />
+      <Hero onOpenGame={() => setIsGameOpen(true)} />
       <About />
       <Skills />
       <Projects />
       <Experience />
       <Contact />
       <Footer />
-      <Chatbot />
+      <Chatbot onOpenGame={() => setIsGameOpen(true)} theme={theme} />
+      <FlappyBirdModal isOpen={isGameOpen} onClose={() => setIsGameOpen(false)} theme={theme} />
     </div>
   )
 }

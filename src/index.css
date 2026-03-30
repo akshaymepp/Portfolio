@@ -46,6 +46,11 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  body.game-active {
+    overflow: hidden;
+    touch-action: none;
+  }
+
   body.theme-transition {
     animation: themeFade 0.25s ease-in-out;
   }
@@ -546,6 +551,44 @@
 .animate-shimmer {
   animation: shimmer 2.5s infinite;
   background-size: 1000px 100%;
+}
+
+.hero-akshay {
+  transition: transform 220ms ease, filter 220ms ease, text-shadow 220ms ease;
+}
+
+.hero-akshay:hover {
+  transform: translateY(-2px) scale(1.03);
+  filter: brightness(1.08);
+  text-shadow: 0 0 18px rgba(56, 189, 248, 0.25);
+}
+
+.game-shell {
+  max-height: min(92vh, 860px);
+}
+
+.game-canvas-wrap {
+  min-height: 0;
+}
+
+.game-canvas {
+  width: min(100%, 420px);
+  max-width: 100%;
+  background: transparent;
+}
+
+.light .game-canvas {
+  border-color: rgba(146, 94, 0, 0.16);
+}
+
+@media (max-width: 767px) {
+  .game-shell {
+    min-height: 0;
+  }
+
+  .game-canvas {
+    width: min(100%, 310px);
+  }
 }
 
 /* Smooth scrolling */

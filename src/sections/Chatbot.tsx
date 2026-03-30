@@ -190,7 +190,14 @@ const getBotResponse = (input: string) => {
   return 'Great question! I am learning constantly. For more detailed conversation, please use the contact form or email me directly.'
 }
 
-export const Chatbot = () => {
+type ThemeMode = 'dark' | 'light'
+
+type ChatbotProps = {
+  onOpenGame: () => void
+  theme: ThemeMode
+}
+
+export const Chatbot = ({ onOpenGame, theme }: ChatbotProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
@@ -444,6 +451,10 @@ export const Chatbot = () => {
   }, [isOpen])
 
   const panelVisible = isOpen || isClosing
+  const playButtonClasses =
+    theme === 'dark'
+      ? 'border-cyan-300/30 bg-slate-900/85 text-cyan-100 hover:bg-slate-800'
+      : 'border-amber-900/15 bg-[#fff7e9] text-amber-950 hover:bg-[#ffefcb]'
 
   return (
     <section className="fixed bottom-6 right-6 z-50">
@@ -502,10 +513,24 @@ export const Chatbot = () => {
       `}</style>
 
       <div className="relative">
+        <div className="absolute bottom-0 right-16 hidden items-center gap-3 md:flex">
+          <button
+            type="button"
+            onClick={onOpenGame}
+            className={`flex h-14 w-14 items-center justify-center rounded-full border text-center text-[11px] font-semibold leading-tight shadow-[0_20px_35px_rgba(15,23,42,0.22)] transition duration-300 hover:-translate-y-0.5 ${playButtonClasses}`}
+            aria-label="Play hidden Flappy Bird game"
+          >
+            <span className="flex flex-col items-center justify-center">
+              <span>Play</span>
+              <span>Game</span>
+            </span>
+          </button>
+        </div>
+
         {/* Circular floating button */}
         <button
           onClick={handleToggle}
-          className={`absolute bottom-0 right-0 w-14 h-14 rounded-full border border-cyan-300/40 bg-gradient-to-br from-cyan-500 to-blue-500 text-white shadow-[0_20px_35px_rgba(8,145,255,0.35)] transition duration-300 ease-in-out transform ${
+          className={`absolute bottom-0 right-0 h-14 w-14 rounded-full border border-cyan-300/40 bg-gradient-to-br from-cyan-500 to-blue-500 text-white shadow-[0_20px_35px_rgba(8,145,255,0.35)] transition duration-300 ease-in-out transform ${
             isMounted ? 'opacity-100 scale-100' : 'opacity-0 scale-0.8'
           } hover:scale-110 hover:shadow-[0_0_20px_rgba(56,189,248,0.55)]`}
           style={{ animation: isMounted ? 'chatbot-button-enter 0.48s cubic-bezier(0.16,0.63,0.27,0.93) forwards' : undefined }}

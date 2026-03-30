@@ -138,22 +138,22 @@ export const Contact = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
           {/* Contact Info */}
-          <div className="glass-effect p-8 rounded-2xl min-h-[180px] flex flex-col">
+          <div className="glass-effect p-6 lg:p-8 rounded-2xl min-h-[180px] flex flex-col">
             <div className="text-3xl mb-4">
               📧
             </div>
             <h3 className="font-poppins font-bold mb-2 text-accent-blue">Email</h3>
             <a
               href="mailto:akshaykrishmepp@gmail.com"
-              className="text-gray-300 hover:text-accent-blue transition-colors whitespace-nowrap text-sm"
+              className="text-gray-300 hover:text-accent-blue transition-colors text-sm break-all"
             >
               akshaykrishmepp@gmail.com
             </a>
           </div>
 
-          <div className="glass-effect p-8 rounded-2xl min-h-[180px] flex flex-col">
+          <div className="glass-effect p-6 lg:p-8 rounded-2xl min-h-[180px] flex flex-col">
             <div className="text-3xl mb-4">
               📱
             </div>
@@ -166,7 +166,7 @@ export const Contact = () => {
             </a>
           </div>
 
-          <div className="glass-effect p-8 rounded-2xl min-h-[180px] flex flex-col">
+          <div className="glass-effect p-6 lg:p-8 rounded-2xl min-h-[180px] flex flex-col">
             <div className="text-3xl mb-4">
               📍
             </div>

@@ -12,7 +12,11 @@ const COLOR_GRADIENTS = [
   { from: '#3B82F6', to: '#A855F7' },     // blue to purple
 ]
 
-export const Hero = () => {
+type HeroProps = {
+  onOpenGame: () => void
+}
+
+export const Hero = ({ onOpenGame }: HeroProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
   const hiRef = useRef<HTMLDivElement>(null)
@@ -21,8 +25,11 @@ export const Hero = () => {
   const ctaRef = useRef<HTMLDivElement>(null)
   const akshayRef = useRef<HTMLSpanElement>(null)
   const resumeRef = useRef<HTMLAnchorElement>(null)
+  const longPressTimerRef = useRef<number | null>(null)
   const [colorIndex, setColorIndex] = useState(0)
   const [isDownloadingResume, setIsDownloadingResume] = useState(false)
+  const [showGameHint, setShowGameHint] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -167,9 +174,47 @@ export const Hero = () => {
       el.removeEventListener('mouseleave', onLeave)
     }
   }, [])
-  
 
-  
+  useEffect(() => {
+    const updateDeviceState = () => {
+      const nextIsMobile = window.innerWidth < 1024
+      setIsMobile(nextIsMobile)
+      setShowGameHint(nextIsMobile)
+    }
+
+    updateDeviceState()
+    window.addEventListener('resize', updateDeviceState)
+
+    return () => {
+      window.removeEventListener('resize', updateDeviceState)
+      if (longPressTimerRef.current !== null) {
+        window.clearTimeout(longPressTimerRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!showGameHint || !isMobile) return
+
+    const timeout = window.setTimeout(() => setShowGameHint(false), 3600)
+    return () => window.clearTimeout(timeout)
+  }, [isMobile, showGameHint])
+
+  const clearLongPress = () => {
+    if (longPressTimerRef.current !== null) {
+      window.clearTimeout(longPressTimerRef.current)
+      longPressTimerRef.current = null
+    }
+  }
+
+  const startLongPress = () => {
+    if (!isMobile) return
+    clearLongPress()
+    longPressTimerRef.current = window.setTimeout(() => {
+      setShowGameHint(false)
+      onOpenGame()
+    }, 600)
+  }
 
   return (
     <section
@@ -207,10 +252,17 @@ export const Hero = () => {
             <span className="text-white">I'm </span>
             <span
               ref={akshayRef}
-              className="bg-clip-text text-transparent"
+              className="hero-akshay inline-block cursor-pointer bg-clip-text text-transparent select-none"
               style={{
                 backgroundImage: `linear-gradient(to right, ${COLOR_GRADIENTS[colorIndex].from}, ${COLOR_GRADIENTS[colorIndex].to})`,
               }}
+              onTouchStart={startLongPress}
+              onTouchEnd={clearLongPress}
+              onTouchCancel={clearLongPress}
+              onMouseDown={startLongPress}
+              onMouseUp={clearLongPress}
+              onMouseLeave={clearLongPress}
+              aria-label="Akshay. On mobile, long press to play a hidden game."
             >
               Akshay
             </span>
@@ -225,6 +277,17 @@ export const Hero = () => {
           <p className="text-gray-300 max-w-xl mx-auto">
             I craft scalable automation frameworks and ensure software excellence.
           </p>
+          <div
+            className={`mx-auto mt-4 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-all duration-300 md:hidden ${
+              showGameHint
+                ? 'translate-y-0 opacity-100 border-cyan-300/40 bg-slate-900/70 text-cyan-100'
+                : 'pointer-events-none -translate-y-2 opacity-0 border-transparent bg-transparent text-transparent'
+            }`}
+            role="status"
+            aria-live="polite"
+          >
+            Long press on Akshay to play a game 🎮
+          </div>
         </div>
 
         <div
